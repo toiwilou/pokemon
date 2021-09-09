@@ -1,29 +1,48 @@
 import { Injectable } from '@angular/core';
-import { POKEMONS } from './mocks-pokemons';
 import { Pokemon } from './pokemon';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry, tap } from 'rxjs/operators';
 
 @Injectable()
 export class PokemonsService { 
 
-    private _index : number = 0;
+  private _index : number = 0;
+  private pokemons: Pokemon[] | undefined;
 
-    getPokemons(): Pokemon[] {
-        return POKEMONS;
-    }
+  constructor(private http: HttpClient) { }
 
-    getPokemon(id: number): Pokemon {
-      let pokemons = this.getPokemons();
-      
-      for(let index = 0; index < pokemons.length; index++) {
-        if(id === pokemons[index].id) {
-            this._index = index;
-        }
+  getPokemons(): Observable<Pokemon[]> {
+    return this.http.get<Pokemon[]>('api/pokemons').pipe(
+      tap((_) => console.info('appel ok')),
+      //catchError(console.error('Erreur sur l’appel', []) => {})
+    );
+  }
+
+  //getPokemons(): Pokemon[] { return POKEMONS; }
+
+  getPokemon(id: number): Pokemon {
+    this.getPokemons().subscribe(pokemons => this.pokemons = pokemons);
+  
+    //@ts-ignore
+    for(let index = 0; index < this.pokemons.length; index++) {
+      //@ts-ignore
+      if(id === this.pokemons[index].id) {
+        this._index = index;
       }
-
-      return pokemons[this._index];
     }
+    
+    //@ts-ignore
+    return this.pokemons[this._index];
+  }
 
-    getPokemonTypes(): Array<string> {
-      return ['Plante', 'Feu', 'Eau', 'Insect', 'Normal', 'Electik', 'Poison', 'Fée', 'Vol'];
-    }
+  editPokemon (pokemon: Pokemon): Pokemon {
+    this.http.put('api/pokemons/' + pokemon.id, pokemon);
+    //@ts-ignore
+    return this.getPokemon(pokemon!.id);
+  }
+
+  getPokemonTypes(): Array<string> {
+    return ['Plante', 'Feu', 'Eau', 'Insect', 'Normal', 'Electik', 'Poison', 'Fée', 'Vol'];
+  }
 }

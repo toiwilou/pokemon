@@ -22,4 +22,6 @@ export class EditPokemonComponent implements OnInit {
     let id = +this.route.snapshot.params['id'];
     this.pokemon = this.pokemonsService.getPokemon(id);
   }
+
+  
 }
