@@ -5,8 +5,8 @@ import { Pokemon } from './pokemon';
   
 @Component({
     selector: 'pokemon-form',
-    templateUrl: './pokemons/pokemon-form.component.html',
-    styleUrls: ['./pokemons/pokemon-form.component.css']
+    templateUrl: './pokemon-form.component.html',
+    styleUrls: ['./pokemon-form.component.css']
 })
 export class PokemonFormComponent implements OnInit {
   
@@ -23,8 +23,9 @@ export class PokemonFormComponent implements OnInit {
     }
   
     // Détermine si le type passé en paramètres appartient ou non au pokémon en cours d'édition.
-    /* hasType(type: string): boolean {
-        let index = this.pokemon.types).indexOf(type);
+     hasType(type: string): boolean {
+         //@ts-ignore
+        let index = this.pokemon.types.indexOf(type);
         if (index > -1) return true;
         return false;
     }//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
@@ -33,21 +34,26 @@ export class PokemonFormComponent implements OnInit {
     selectType($event: any, type: string): void {
         let checked = $event.target.checked;
         if (checked) {
-            this.pokemon.types.push(type);
+            
+            this.pokemon!.types!.push(type);
         } else {
-            let index = this.pokemon.types.indexOf(type);
+            
+            let index = this.pokemon!.types!.indexOf(type);
             if (index > -1) {
-                this.pokemon.types.splice(index, 1);
+               
+                this.pokemon!.types!.splice(index, 1);
             }
         }
     }
   
     // Valide le nombre de types pour chaque pokémon
     isTypesValid(type: string): boolean {
-        if (this.pokemon.types.length === 1 && this.hasType(type)) {
+        
+        if (this.pokemon!.types!.length === 1 && this.hasType(type)) {
             return false;
         }
-        if (this.pokemon.types.length >= 3 && !this.hasType(type)) {
+       
+        if (this.pokemon!.types!.length >= 3 && !this.hasType(type)) {
             return false;
         }
   
@@ -57,8 +63,9 @@ export class PokemonFormComponent implements OnInit {
     // La méthode appelée lorsque le formulaire est soumis.
     onSubmit(): void {
         console.log("Submit form !");
-        let link = ['/pokemon', this.pokemon.id];
+        
+        let link = ['/pokemon', this.pokemon!.id];
         this.router.navigate(link);
-    } */
+    } 
   
 }
