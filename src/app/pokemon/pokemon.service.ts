@@ -22,7 +22,7 @@ export class PokemonsService {
   //getPokemons(): Pokemon[] { return POKEMONS; }
 
   getPokemon(id: number): Pokemon {
-    this.getPokemons().subscribe(pokemons => this.pokemons = pokemons);
+    this.getPokemons().subscribe(pokemons => this.pokemons = pokemons);    
   
     //@ts-ignore
     for(let index = 0; index < this.pokemons.length; index++) {
@@ -37,9 +37,9 @@ export class PokemonsService {
   }
 
   editPokemon (pokemon: Pokemon): Pokemon {
-    this.http.put('api/pokemons/' + pokemon.id, pokemon);
+    this.http.post('api/pokemons', pokemon);
     //@ts-ignore
-    return this.getPokemon(pokemon!.id);
+    return this.getPokemon(pokemon.id);
   }
 
   getPokemonTypes(): Array<string> {
