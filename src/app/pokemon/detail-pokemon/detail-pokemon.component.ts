@@ -20,7 +20,11 @@ export class DetailPokemonComponent implements OnInit {
   pokemon: Pokemon | undefined;
 
   ngOnInit (): void {
-    this.pokemon = this.pokemonService.getPokemon(+ this.route.snapshot.params.id);
+    if (this.pokemonService.get_Pokemon() && this.pokemonService.get_Pokemon().id == +this.route.snapshot.params.id) {
+      this.pokemon = this.pokemonService.get_Pokemon();
+    } else {
+      this.pokemon = this.pokemonService.getPokemon(+ this.route.snapshot.params.id);
+    }
   } 
 
   goBack(): void {

@@ -9,11 +9,21 @@ export class PokemonsService {
 
   private _index : number = 0;
   private pokemons: Pokemon[] | undefined;
+  private _pokemons: Pokemon[] | undefined;
+  private pokemon: Pokemon | undefined;
 
   constructor(private http: HttpClient) { }
 
+  get_Pokemon(): Pokemon {
+    return this.pokemon!;
+  }
+
+  set_Pokemon(pokemon: Pokemon): void{
+    this.pokemon = pokemon; 
+  }
+
   getPokemons(): Observable<Pokemon[]> {
-    return this.http.get<Pokemon[]>('api/pokemons').pipe(
+    return this.http.get<Pokemon[]>(`api/pokemons`).pipe(
       tap((_) => console.info('appel ok')),
       //catchError(console.error('Erreur sur l’appel', []) => {})
     );
@@ -36,10 +46,9 @@ export class PokemonsService {
     return this.pokemons[this._index];
   }
 
-  editPokemon (pokemon: Pokemon): Pokemon {
-    this.http.post('api/pokemons', pokemon);
-    //@ts-ignore
-    return this.getPokemon(pokemon.id);
+  editPokemon (pokemon: Pokemon): Pokemon { 
+    this.set_Pokemon(pokemon);
+    return pokemon; 
   }
 
   getPokemonTypes(): Array<string> {
