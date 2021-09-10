@@ -11,6 +11,7 @@ import { PokemonsService } from '../pokemon.service';
 export class ListPokemonsComponent implements OnInit {
   title: string = "Liste des pokémons";
   pokemons: Pokemon[] | undefined;
+  searchText: string = '';
 
   constructor (
     private router: Router,

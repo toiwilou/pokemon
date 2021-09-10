@@ -9,6 +9,9 @@ import { PokemonTypeColorPipe } from './pokemon-type-color.pipe';
 import { PokemonsService } from './pokemon.service';
 import { EditPokemonComponent } from './edit-pokemon/edit-pokemon.component';
 import { PokemonFormComponent } from './pokemon-form.component';
+import { DeletePokemonComponent } from './delete-pokemon/delete-pokemon.component';
+import { PokemonFilterComponent } from './pokemon-filter.component';
+import { LoginComponent } from './login/login.component';
   
 @NgModule({
     imports: [
@@ -21,7 +24,10 @@ import { PokemonFormComponent } from './pokemon-form.component';
         BorderCardDirective,
         PokemonTypeColorPipe,
         EditPokemonComponent,
+        DeletePokemonComponent,
         PokemonFormComponent,
+        PokemonFilterComponent,
+        LoginComponent,
     ],
     providers: [PokemonsService,],
 })

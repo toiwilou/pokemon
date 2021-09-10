@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Pokemon } from './pokemon';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, tap } from 'rxjs/operators';
 
@@ -36,10 +36,18 @@ export class PokemonsService {
     return this.pokemons[this._index];
   }
 
-  editPokemon (pokemon: Pokemon): Pokemon {
-    this.http.post('api/pokemons', pokemon);
-    //@ts-ignore
-    return this.getPokemon(pokemon.id);
+  editPokemon (pokemon: Pokemon): Observable<any> {
+    return this.http.put('api/pokemons', 
+      pokemon, 
+      { headers : new HttpHeaders({ 'Content-Type': 'application/json'}) }
+    ).pipe(
+      tap((test) => console.log('test'))
+    );
+  }
+
+  deletePokemon(id: number): string {
+    this.http.delete('api/pokemons');
+    return 'Succes !';
   }
 
   getPokemonTypes(): Array<string> {
